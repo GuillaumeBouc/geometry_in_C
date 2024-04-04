@@ -11,15 +11,20 @@ clock = pygame.time.Clock()
 
 origin = (0, 0)
 size = 15
-spacing = 0.075
+spacing = 0.05
 
 grid_1 = Grid(origin, size, spacing)
 grid_2 = Grid(origin, size, spacing)
 
+transform_per_grid = {
+    grid_1: transform_0,
+    grid_2: transform_3,
+}
+
 scale = 100
 offset = (
-    (screen.get_width() / 2) - (50 * (grid_2.size * spacing) / 2),
-    (screen.get_height() / 2) - (50 * (grid_2.size * spacing) / 2),
+    (screen.get_width() / 2) - (50 * (grid_2.size * spacing)),
+    (screen.get_height() / 2) - (50 * (grid_2.size * spacing)),
 )
 
 
@@ -42,17 +47,17 @@ while True:
 
         screen.fill((0, 0, 0))
 
-        # grid_1.transform(transform_0)
-        grid_2.transform(transform_1)
+        grid_1.transform(transform_per_grid[grid_1])
+        grid_2.transform(transform_per_grid[grid_2])
 
-        # pygame.draw.circle(screen, (0, 0, 255), (400, 400), 5)
+        pygame.draw.circle(screen, (255, 255, 255), (400, 400), 5)
 
-        # grid_1.draw_colorized_grid(
-        #     screen,
-        #     scale,
-        #     offset,
-        #     colors,
-        # )
+        grid_1.draw(
+            screen,
+            scale,
+            offset,
+            color=(255, 255, 255),
+        )
         grid_2.draw_colorized_grid(
             screen,
             scale,
@@ -60,8 +65,8 @@ while True:
             colors,
         )
 
-        # grid_1.update(center, 10, 0.1, transform_0)
-        grid_2.update(center, size, spacing, transform_1)
+        grid_1.update(center, size, spacing, transform_per_grid[grid_1])
+        grid_2.update(center, size, spacing, transform_per_grid[grid_2])
 
         pygame.display.flip()
 
