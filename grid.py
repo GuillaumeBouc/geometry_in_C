@@ -13,9 +13,10 @@ class Grid:
     def create_points_list(self):
         """Creates a list of points that form a grid."""
         points_list = []
-        for i in range(self.size + 1):
+        half_size = self.size // 2
+        for i in range(-half_size, half_size + 1):
             line = []
-            for j in range(self.size + 1):
+            for j in range(-half_size, half_size + 1):
                 line.append(
                     (
                         self.origin[0] + i * self.spacing,
